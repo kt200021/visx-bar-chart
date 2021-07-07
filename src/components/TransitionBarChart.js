@@ -59,6 +59,8 @@ const BarChart = (props) => {
     )
 }
 
+
+
 const TransitionBarChart = () => {
 
     //const [showData, setShowData] = useState(data.slice(0, 5));
@@ -113,6 +115,106 @@ const TransitionBarChart = () => {
     //     nice: true,
     //     round: true
     // })
+    const activeButtonCode=(startx,leavex)=>{
+      
+return(
+<>
+<NodeGroup
+data={showData}
+keyAccessor={d => d.letter}
+start={(data, index) => ({
+    opacity: [0.8],
+    fill: 'green',
+    width: xScale.bandwidth(),
+    // x: [width + width-(4-index)*xScale.bandwidth()+index*5],
+    // x: [width+index*xScale.bandwidth()],
+    // x:[-width-width+(4-index)*xScale.bandwidth-index*5],
+    x: [startx],
+    y: [yScale(y(data))],
+    height: [innerHeight - yScale(y(data))]
+})}
+enter={(data, index) => ({
+    //value: data.frequency, 
+    width: xScale.bandwidth(),
+    x: [xScale(x(data))],
+    y: [yScale(y(data))],
+    height: [innerHeight - yScale(y(data))],
+    timing: { duration: 200} 
+})}
+    
+update={(data, index) => ({
+    // value: data.frequency,
+    width: xScale.bandwidth(),
+    x: [xScale(x(data))],
+    y: [yScale(y(data))],
+    height: [innerHeight - yScale(y(data))],
+    timing: { duration: 200} 
+})}
+
+leave={(data, index) => ({
+    opacity: [0],
+    x: [leavex],
+    value: [data.frequency],
+    // timing: {duration: 200*index, delay: 10*index}
+    timing: {duration: 250}
+
+})}
+>
+{
+    nodes => (
+        
+        <g>
+        {
+            nodes.map(({ key, data, state }) => {
+                    console.log();
+                return  (
+                    
+                <BarChart
+                                // fill='#4682b4'
+                                onMouseOver={() => {
+                                    showTooltip({
+                                        tooltipLeft: xScale(x(data)) + 10,
+                                        tooltipTop: yScale(y(data)) + 10,
+                                        tooltipData: `${x(data)}: ${Math.floor(y(data))}` 
+                                    });
+                                }}
+                                state={state}
+                                key={key}
+                                onMouseOut={hideTooltip}
+                                scale={xScale}
+                />
+            )})
+        }
+        </g>
+    )
+}
+</NodeGroup> 
+<AxisLeft 
+left={margin.left}
+scale={yScale}
+hideAxisLine
+hideTicks
+rangePadding = {5}
+
+/>
+<AxisBottom 
+top={innerHeight}
+scale={xScale}
+hideAxisLine
+hideTicks
+rangePadding = {5}
+numTicks = {26}
+label='\uf118'
+/>
+</> 
+)
+
+
+
+
+
+    }
+
 
     return(
         <>
@@ -121,187 +223,8 @@ const TransitionBarChart = () => {
                 <svg ref={containerRef} width={width} height={height}>
                     <Group top={15}>
                         {
-                            isbuttonPrev ? <>
-                                <NodeGroup
-                                    data={showData}
-                                    keyAccessor={d => d.letter}
-                                    start={(data, index) => ({
-                                        opacity: [0.8],
-                                        fill: 'green',
-                                        width: xScale.bandwidth(),
-                                        // x: [width + width-(4-index)*xScale.bandwidth()+index*5],
-                                        // x: [width+index*xScale.bandwidth()],
-                                        // x:[-width-width+(4-index)*xScale.bandwidth-index*5],
-                                        x: [-200],
-                                        y: [yScale(y(data))],
-                                        height: [innerHeight - yScale(y(data))]
-                                    })}
-                                    enter={(data, index) => ({
-                                        //value: data.frequency, 
-                                        width: xScale.bandwidth(),
-                                        x: [xScale(x(data))],
-                                        y: [yScale(y(data))],
-                                        height: [innerHeight - yScale(y(data))],
-                                        timing: { duration: 200} 
-                                    })}
-
-                                    update={(data, index) => ({
-                                        // value: data.frequency,
-                                        width: xScale.bandwidth(),
-                                        x: [xScale(x(data))],
-                                        y: [yScale(y(data))],
-                                        height: [innerHeight - yScale(y(data))],
-                                        timing: { duration: 200} 
-                                    })}
-
-                                    leave={(data, index) => ({
-                                        opacity: [0],
-                                        x: [800],
-                                        value: [data.frequency],
-                                        // timing: {duration: 200*index, delay: 10*index}
-                                        timing: {duration: 250}
-
-                                    })}
-                                >
-                                    {
-                                        nodes => (
-                                            
-                                            <g>
-                                            {
-                                                nodes.map(({ key, data, state }) => {
-                                                        console.log(nodes);
-                                                    return  (
-                                                        
-                                                    <BarChart
-                                                                    // fill='#4682b4'
-                                                                    onMouseOver={() => {
-                                                                        showTooltip({
-                                                                            tooltipLeft: xScale(x(data)) + 10,
-                                                                            tooltipTop: yScale(y(data)) + 10,
-                                                                            tooltipData: `${x(data)}: ${Math.floor(y(data))}` 
-                                                                        });
-                                                                    }}
-                                                                    state={state}
-                                                                    key={key}
-                                                                    onMouseOut={hideTooltip}
-                                                                    scale={xScale}
-                                                    />
-                                                )})
-                                            }
-                                            </g>
-                                        )
-                                    }
-                                </NodeGroup> 
-                                <AxisLeft 
-                                    left={margin.left}
-                                    scale={yScale}
-                                    hideAxisLine
-                                    hideTicks
-                                    rangePadding = {5}
-                                    
-                                />
-                                <AxisBottom 
-                                    top={innerHeight}
-                                    scale={xScale}
-                                    hideAxisLine
-                                    hideTicks
-                                    rangePadding = {5}
-                                    numTicks = {26}
-                                    label='\uf118'
-                                />
-                            </> : 
-                        <>
-                        <NodeGroup
-                            data={showData}
-                            keyAccessor={d => d.letter}
-                            start={(data, index) => ({
-                                opacity: [0.8],
-                                fill: 'green',
-                                width: xScale.bandwidth(),
-                                x: [width + width-(4-index)*xScale.bandwidth()+index*5],
-                                // x: [width+index*xScale.bandwidth()],
-                                y: [yScale(y(data))],
-                                height: [innerHeight - yScale(y(data))]
-                              })}
-                            enter={(data, index) => ({
-                                //value: data.frequency, 
-                                width: xScale.bandwidth(),
-                                x: [xScale(x(data))],
-                                y: [yScale(y(data))],
-                                height: [innerHeight - yScale(y(data))],
-                                timing: { duration: 200} 
-                            })}
-
-                            update={(data, index) => ({
-                                // value: data.frequency,
-                                width: xScale.bandwidth(),
-                                x: [xScale(x(data))],
-                                y: [yScale(y(data))],
-                                height: [innerHeight - yScale(y(data))],
-                                timing: { duration: 200} 
-                            })}
-
-                            leave={(data, index) => ({
-                                opacity: [0],
-                                x: [-300],
-                                value: [data.frequency],
-                                // timing: {duration: 200*index, delay: 10*index}
-                                timing: {duration: 250}
-
-                            })}
-                            // update={this.updateTransition}
-                            // leave={this.leaveTransition}
-                        >
-                        {
-                            nodes => (
-                                
-                                <g>
-                                  {
-                                  nodes.map(({ key, data, state }) => {
-                                        console.log(nodes);
-                                    return  (
-                                        
-                                    <BarChart
-                                                    // fill='#4682b4'
-                                                    onMouseOver={() => {
-                                                        showTooltip({
-                                                            tooltipLeft: xScale(x(data)) + 10,
-                                                            tooltipTop: yScale(y(data)) + 10,
-                                                            tooltipData: `${x(data)}: ${Math.floor(y(data))}` 
-                                                        });
-                                                    }}
-                                                    scale={xScale}
-                                                    state={state}
-                                                    key={key}
-                                                    onMouseOut={hideTooltip}
-                                    />
-                                  )})}
-                                </g>
-                              )
-                        }
-                        </NodeGroup>
-                        <AxisLeft 
-                            left={margin.left}
-                            scale={yScale}
-                            hideAxisLine
-                            hideTicks
-                            rangePadding = {5}
-                            
-                        />
-                        <AxisBottom 
-                            top={innerHeight}
-                            scale={xScale}
-                            hideAxisLine
-                            hideTicks
-                            rangePadding = {5}
-                            numTicks = {26}
-                            // ticksComponent={(xScale) => {
-                            //     return(
-                            //         <Text>{'\uf118'}</Text>
-                            //     )
-                            // }}
-                        />
-                        </>
+                            isbuttonPrev ? activeButtonCode(-200,800) : activeButtonCode(width + width-(4-index)*xScale.bandwidth()+index*5,-300)
+                        
                     }
                     </Group>
                 </svg>
