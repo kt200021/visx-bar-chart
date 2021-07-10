@@ -48,9 +48,9 @@ const TransitionBarChart = () => {
 
     return(
         <>
-            <div className='svgDiv'>
+            <div className='svgDiv' style={{width:"100%"}}>
             <span onClick={onPrev}><FontAwesomeIcon  icon={faAngleLeft} size='3x' color='#a4a4a4' /></span> 
-                <svg ref={containerRef} width={300} height={600}>
+                <svg ref={containerRef} style={{maxWidth:'400', width:'90%', height:'600'}}>
                     <Group top={15}>
                         {
                             isbuttonPrev ?      //Show differrent transition on basis of the button pressed

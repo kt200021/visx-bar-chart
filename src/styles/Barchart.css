@@ -1,20 +1,3 @@
-/* button {
-    background-color: 'white';
-    border-radius: 50%;
-    opacity: 0.4;
-}
-
-@keyframes mymove {
-    50% {
-        box-shadow: 3px 2px 0px 3px #b4b4b4;
-    }
-}
-
-button:hover {
-    opacity: 0.8;
-    /* animation: mymove 0.4s step-end; */
-/* } */
-
 .svgDiv {
     position: relative;
     display: flex;
@@ -30,7 +13,7 @@ span {
     background-color: 'white';
     border-radius: 50%;
     opacity: 0.2;
-    padding: 50px 30px;
+    padding: 50px 10px;
 }
 
 span:first-child {
