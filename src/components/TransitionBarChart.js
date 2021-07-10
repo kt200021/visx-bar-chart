@@ -47,7 +47,6 @@ const TransitionBarChart = () => {
     const showData = data.slice(Math.max(index-5, 0), index)    //How much data to show currently
 
     
-<<<<<<< HEAD
 
     return(
         <>
@@ -73,124 +72,6 @@ const TransitionBarChart = () => {
                                     xLeave={-300}
                                     data={data}
                                 />    
-=======
-    // const yScale = scaleLinear({
-    //     range: [innerHeight, 0],
-    //     domain: [0, Math.max(...data.map(y))],
-    //     nice: true,
-    //     round: true
-    // })
-    const activeButtonCode=(startx,leavex)=>{
-      
-return(
-<>
-<NodeGroup
-data={showData}
-keyAccessor={d => d.letter}
-start={(data, index) => ({
-    opacity: [0.8],
-    fill: 'green',
-    width: xScale.bandwidth(),
-    // x: [width + width-(4-index)*xScale.bandwidth()+index*5],
-    // x: [width+index*xScale.bandwidth()],
-    // x:[-width-width+(4-index)*xScale.bandwidth-index*5],
-    x: [startx],
-    y: [yScale(y(data))],
-    height: [innerHeight - yScale(y(data))]
-})}
-enter={(data, index) => ({
-    //value: data.frequency, 
-    width: xScale.bandwidth(),
-    x: [xScale(x(data))],
-    y: [yScale(y(data))],
-    height: [innerHeight - yScale(y(data))],
-    timing: { duration: 200} 
-})}
-    
-update={(data, index) => ({
-    // value: data.frequency,
-    width: xScale.bandwidth(),
-    x: [xScale(x(data))],
-    y: [yScale(y(data))],
-    height: [innerHeight - yScale(y(data))],
-    timing: { duration: 200} 
-})}
-
-leave={(data, index) => ({
-    opacity: [0],
-    x: [leavex],
-    value: [data.frequency],
-    // timing: {duration: 200*index, delay: 10*index}
-    timing: {duration: 250}
-
-})}
->
-{
-    nodes => (
-        
-        <g>
-        {
-            nodes.map(({ key, data, state }) => {
-                    console.log();
-                return  (
-                    
-                <BarChart
-                                // fill='#4682b4'
-                                onMouseOver={() => {
-                                    showTooltip({
-                                        tooltipLeft: xScale(x(data)) + 10,
-                                        tooltipTop: yScale(y(data)) + 10,
-                                        tooltipData: `${x(data)}: ${Math.floor(y(data))}` 
-                                    });
-                                }}
-                                state={state}
-                                key={key}
-                                onMouseOut={hideTooltip}
-                                scale={xScale}
-                />
-            )})
-        }
-        </g>
-    )
-}
-</NodeGroup> 
-<AxisLeft 
-left={margin.left}
-scale={yScale}
-hideAxisLine
-hideTicks
-rangePadding = {5}
-
-/>
-<AxisBottom 
-top={innerHeight}
-scale={xScale}
-hideAxisLine
-hideTicks
-rangePadding = {5}
-numTicks = {26}
-label='\uf118'
-/>
-</> 
-)
-
-
-
-
-
-    }
-
-
-    return(
-        <>
-            <div className='svgDiv'>
-            <span onClick={onPrev}><FontAwesomeIcon  icon={faAngleLeft} size='3x' color='#a4a4a4' /></span>
-                <svg ref={containerRef} width={width} height={height}>
-                    <Group top={15}>
-                        {
-                            isbuttonPrev ? activeButtonCode(-200,800) : activeButtonCode(width + width-(4-index)*xScale.bandwidth()+index*5,-300)
-                        
->>>>>>> 885f7a7eb25c32b6a648cb9f0892f53537f8ed6b
                     }
                     </Group>
                 </svg>
